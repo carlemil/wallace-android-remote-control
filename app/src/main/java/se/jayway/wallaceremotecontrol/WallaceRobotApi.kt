@@ -15,7 +15,7 @@ class WallaceRobotApi() {
     private var ws: WebSocket?
 
     init {
-        val request = Request.Builder().url("ws://10.0.100.84:8887").build()
+        val request = Request.Builder().url("ws://10.0.100.86:8887").build()
         ws = client.newWebSocket(request, listener)
         //client.dispatcher().executorService().shutdown()
 

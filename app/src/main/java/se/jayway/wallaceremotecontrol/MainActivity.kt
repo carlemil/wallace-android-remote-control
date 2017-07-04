@@ -20,12 +20,18 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
+        stopMotors.setOnTouchListener {
+            v, e ->
+            writeToSocket(0, 0)
+            false
+        }
+
         seekBarLeft.setOnTouchListener { v, e ->
-            writeToSocket( seekBarLeft.progress - 100, seekBarRight.progress - 100)
+            writeToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
             false
         }
         seekBarRight.setOnTouchListener { v, e ->
-            writeToSocket( seekBarLeft.progress - 100, seekBarRight.progress - 100)
+            writeToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
             false
         }
     }
@@ -35,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         robot.close()
     }
 
-    private fun writeToSocket( rightMotor: Int, leftMotor: Int) {
+    private fun writeToSocket(rightMotor: Int, leftMotor: Int) {
         var message = "motor: left ${leftMotor} right ${rightMotor}"
         Log.d("TAG", message)
         robot.send(message);
