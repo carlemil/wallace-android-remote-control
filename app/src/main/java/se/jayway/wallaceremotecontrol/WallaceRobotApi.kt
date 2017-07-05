@@ -15,18 +15,13 @@ class WallaceRobotApi() {
     private var ws: WebSocket?
 
     init {
-        val request = Request.Builder().url("ws://10.0.100.86:8887").build()
+        val request = Request.Builder().url("ws://10.0.201.80:8887").build()
         ws = client.newWebSocket(request, listener)
-        //client.dispatcher().executorService().shutdown()
-
+        // TODO should we do this on close? client.dispatcher().executorService().shutdown()
     }
 
     internal class EchoWebSocketListener : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket?, response: Response?) {
-            //        webSocket.send("Hello, it's SSaurel !");
-            //        webSocket.send("What's up ?");
-            //        webSocket.send(ByteString.decodeHex("deadbeef"));
-            //        webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !");
             Log.d("TAG", "Web socket opened")
         }
 
@@ -48,7 +43,6 @@ class WallaceRobotApi() {
         }
 
         companion object {
-
             private val NORMAL_CLOSURE_STATUS = 1000
         }
 

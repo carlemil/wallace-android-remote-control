@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
         stopMotors.setOnTouchListener {
             v, e ->
+            seekBarRight.progress = 255
+            seekBarLeft.progress = 255
             writeToSocket(0, 0)
             false
         }
