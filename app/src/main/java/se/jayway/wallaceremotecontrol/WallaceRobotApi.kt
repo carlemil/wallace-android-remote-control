@@ -10,19 +10,15 @@ import okio.ByteString
  */
 class WallaceRobotApi() {
 
-    private var client = OkHttpClient()
-    private val listener = EchoWebSocketListener()
-    private var ws: WebSocket?
+    private val NORMAL_CLOSURE_STATUS = 1000
 
-    init {
-        val request = Request.Builder().url("ws://10.0.201.80:8887").build()
-        ws = client.newWebSocket(request, listener)
-        // TODO should we do this on close? client.dispatcher().executorService().shutdown()
-    }
+    private val ws = OkHttpClient().newWebSocket(
+            Request.Builder().url("ws://10.0.201.80:8887").build(),
+            WallaceWebSocketListener())
 
-    internal class EchoWebSocketListener : WebSocketListener() {
+    internal class WallaceWebSocketListener : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket?, response: Response?) {
-            Log.d("TAG", "Web socket opened")
+            Log.d("TAG", "Web socket opened "+webSocket.toString())
         }
 
         override fun onMessage(webSocket: WebSocket?, text: String?) {
@@ -34,16 +30,13 @@ class WallaceRobotApi() {
         }
 
         override fun onClosing(webSocket: WebSocket?, code: Int, reason: String?) {
-            webSocket!!.close(NORMAL_CLOSURE_STATUS, null)
+            //webSocket?.close(NORMAL_CLOSURE_STATUS, null)
+
             Log.d("TAG", "Closing : $code / $reason")
         }
 
         override fun onFailure(webSocket: WebSocket?, t: Throwable?, response: Response?) {
             Log.d("TAG", "Error : " + t!!.message)
-        }
-
-        companion object {
-            private val NORMAL_CLOSURE_STATUS = 1000
         }
 
     }
@@ -53,8 +46,7 @@ class WallaceRobotApi() {
     }
 
     fun close() {
-        ws?.close(1000, "Exiting")
-
+        ws?.close(NORMAL_CLOSURE_STATUS, "Exiting")
     }
 }
 

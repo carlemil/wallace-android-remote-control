@@ -13,27 +13,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        resetConnectionButton.setOnTouchListener {
-            v, e ->
+        resetConnectionButton.setOnClickListener {
             robot.close()
             robot = WallaceRobotApi()
+            Log.d("TAG", "Reset web-socket clicked.")
             false
         }
-
-        stopMotors.setOnTouchListener {
-            v, e ->
+        stopMotors.setOnClickListener {
             seekBarRight.progress = 255
             seekBarLeft.progress = 255
-            writeToSocket(0, 0)
+            writeMotorSpeedToSocket(0, 0)
             false
         }
-
         seekBarLeft.setOnTouchListener { v, e ->
-            writeToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
+            writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
             false
         }
         seekBarRight.setOnTouchListener { v, e ->
-            writeToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
+            writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255)
             false
         }
     }
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         robot.close()
     }
 
-    private fun writeToSocket(rightMotor: Int, leftMotor: Int) {
+    private fun writeMotorSpeedToSocket(rightMotor: Int, leftMotor: Int) {
         var message = "motor: left ${leftMotor} right ${rightMotor}"
         Log.d("TAG", message)
         robot.send(message);
