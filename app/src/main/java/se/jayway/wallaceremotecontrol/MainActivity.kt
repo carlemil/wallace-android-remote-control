@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import rx.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
-
 class MainActivity : AppCompatActivity() {
 
     var robot = WallaceRobotApi()
@@ -39,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         })
         stringPublishSubject.sample(500, TimeUnit.MILLISECONDS)
                 .subscribe({ s -> writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255) })
+
+        var ld = LidarData().getLidarOneLine()
+        Log.d("TAG", "ld: "+ld.get(3).distance)
 
     }
 
