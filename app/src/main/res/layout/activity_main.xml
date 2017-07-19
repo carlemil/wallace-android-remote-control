@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:padding="16dp">
 
-    <Button
-        android:id="@+id/resetConnectionButton"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset connection"
-        tools:layout_editor_absoluteY="180dp"
-        tools:layout_editor_absoluteX="16dp"
-        app:layout_constraintStart_toStartOf="@+id/stopMotors"
-        app:layout_constraintEnd_toEndOf="@+id/stopMotors"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarRight"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/stopMotors" />
+        android:layout_above="@id/seekBarRight"
+        android:layout_below="@id/seekBarLeft"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/stopMotors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Stop motors"
-        tools:layout_editor_absoluteY="236dp"
-        tools:layout_editor_absoluteX="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/resetConnectionButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/seekBarLeft" />
+        <Button
+            android:id="@+id/resetConnectionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:rotation="-90"
+            android:text="Reset \nconnection" />
+
+        <Button
+            android:id="@+id/stopMotors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:rotation="-90"
+            android:text="Stop \nmotors" />
+    </LinearLayout>
+
 
     <SeekBar
         android:id="@+id/seekBarLeft"
@@ -38,18 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:max="512"
-        android:progress="255"
-        tools:layout_editor_absoluteX="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:progress="255" />
 
     <SeekBar
         android:id="@+id/seekBarRight"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:max="512"
-        android:progress="255"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:progress="255" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

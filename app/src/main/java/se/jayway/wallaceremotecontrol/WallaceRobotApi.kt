@@ -30,15 +30,12 @@ class WallaceRobotApi() {
         }
 
         override fun onClosing(webSocket: WebSocket?, code: Int, reason: String?) {
-            //webSocket?.close(NORMAL_CLOSURE_STATUS, null)
-
             Log.d("TAG", "Closing : $code / $reason")
         }
 
         override fun onFailure(webSocket: WebSocket?, t: Throwable?, response: Response?) {
             Log.d("TAG", "Error : " + t!!.message)
         }
-
     }
 
     fun send(message: String) {
