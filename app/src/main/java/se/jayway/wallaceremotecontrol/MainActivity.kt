@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.subjects.PublishSubject
@@ -45,11 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ requestLidarData() })
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

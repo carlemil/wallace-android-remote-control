@@ -29,9 +29,14 @@ class WallaceRobotApi() {
             Log.d("TAG", "Receiving : " + text!!)
             when {
                 text.startsWith(Companion.LIDAR_DATA_PREFIX) -> {
-                    lidarDataPublisher.onNext(gson.fromJson<List<LidarData>>(text.substring(WallaceRobotApi.LIDAR_DATA_PREFIX.length), object : TypeToken<List<LidarData>>() {}.type))
+                    lidarDataPublisher.onNext(getLidarDataFromJson(text))
                 }
             }
+        }
+
+        private fun getLidarDataFromJson(text: String): List<LidarData> {
+            val lidarJson = text.substring(LIDAR_DATA_PREFIX.length)
+            return gson.fromJson<List<LidarData>>(lidarJson, object : TypeToken<List<LidarData>>() {}.type)
         }
 
         override fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {
