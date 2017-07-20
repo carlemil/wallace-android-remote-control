@@ -12,11 +12,11 @@ class LidarData {
     internal var gson = Gson()
 
     @SerializedName("theta")
-    internal var theta = 0f
+    var theta = 0f
     @SerializedName("Dist")
-    internal var distance = 0f
+    var distance = 0f
     @SerializedName("Q")
-    internal var quality = 0
+    var quality = 0
 
     fun getLidarOneLine(): List<LidarData> {
         return gson.fromJson<List<LidarData>>(oneRotation, object : TypeToken<List<LidarData>>() {}.type)
