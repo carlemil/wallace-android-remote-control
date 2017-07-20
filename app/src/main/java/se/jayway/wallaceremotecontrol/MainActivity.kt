@@ -3,14 +3,16 @@ package se.jayway.wallaceremotecontrol
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
+
 class MainActivity : AppCompatActivity() {
 
     var robot = WallaceRobotApi()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +39,12 @@ class MainActivity : AppCompatActivity() {
             false
         })
         stringPublishSubject.sample(500, TimeUnit.MILLISECONDS)
-                .subscribe({ s -> writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255) })
+                .subscribe({ _ -> writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255) })
 
-        var ld = LidarData().getLidarOneLine()
-        Log.d("TAG", "ld: "+ld.get(3).distance)
-
+        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .subscribe({ requestLidarData() })
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -51,9 +52,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun writeMotorSpeedToSocket(rightMotor: Int, leftMotor: Int) {
-        var message = "motor: left ${leftMotor} right ${rightMotor}"
+        var message = WallaceRobotApi.MOTOR_PREFIX + " left ${leftMotor} right ${rightMotor}"
         Log.d("TAG", message)
-        robot.send(message);
+        robot.send(message)
+    }
+
+    private fun requestLidarData() {
+        var message = WallaceRobotApi.LIDAR_DATA_PREFIX
+        Log.d("TAG", message)
+        robot.send(message)
     }
 
 }

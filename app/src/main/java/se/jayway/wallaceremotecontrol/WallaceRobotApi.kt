@@ -1,8 +1,11 @@
 package se.jayway.wallaceremotecontrol
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import okio.ByteString
+import rx.subjects.PublishSubject
 
 
 /**
@@ -17,12 +20,23 @@ class WallaceRobotApi() {
             WallaceWebSocketListener())
 
     internal class WallaceWebSocketListener : WebSocketListener() {
+        internal var gson = Gson()
         override fun onOpen(webSocket: WebSocket?, response: Response?) {
-            Log.d("TAG", "Web socket opened "+webSocket.toString())
+            Log.d("TAG", "Web socket opened " + webSocket.toString())
         }
 
         override fun onMessage(webSocket: WebSocket?, text: String?) {
             Log.d("TAG", "Receiving : " + text!!)
+            when {
+                text.startsWith(Companion.LIDAR_DATA_PREFIX) -> {
+                    lidarDataPublisher.onNext(getLidarDataFromJson(text))
+                }
+            }
+        }
+
+        private fun getLidarDataFromJson(text: String): List<LidarData> {
+            val lidarJson = text.substring(LIDAR_DATA_PREFIX.length)
+            return gson.fromJson<List<LidarData>>(lidarJson, object : TypeToken<List<LidarData>>() {}.type)
         }
 
         override fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {
@@ -44,6 +58,13 @@ class WallaceRobotApi() {
 
     fun close() {
         ws?.close(NORMAL_CLOSURE_STATUS, "Exiting")
+    }
+
+    companion object {
+        val MOTOR_PREFIX = "set_motor_speeds:"
+        val LIDAR_DATA_PREFIX = "get_lidar_data:"
+
+        val lidarDataPublisher = PublishSubject.create<List<LidarData>>()
     }
 }
 
