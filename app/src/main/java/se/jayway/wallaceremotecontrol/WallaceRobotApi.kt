@@ -34,11 +34,6 @@ class WallaceRobotApi() {
             }
         }
 
-        private fun getLidarDataFromJson(text: String): List<LidarData> {
-            val lidarJson = text.substring(LIDAR_DATA_PREFIX.length)
-            return gson.fromJson<List<LidarData>>(lidarJson, object : TypeToken<List<LidarData>>() {}.type)
-        }
-
         override fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {
             Log.d("TAG", "Receiving bytes : " + bytes!!.hex())
         }
@@ -49,6 +44,11 @@ class WallaceRobotApi() {
 
         override fun onFailure(webSocket: WebSocket?, t: Throwable?, response: Response?) {
             Log.d("TAG", "Error : " + t!!.message)
+        }
+
+        private fun getLidarDataFromJson(text: String): List<LidarData> {
+            val lidarJson = text.substring(LIDAR_DATA_PREFIX.length)
+            return gson.fromJson<List<LidarData>>(lidarJson, object : TypeToken<List<LidarData>>() {}.type)
         }
     }
 
