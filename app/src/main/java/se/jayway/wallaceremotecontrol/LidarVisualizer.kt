@@ -55,10 +55,7 @@ class LidarVisualizer : View {
             val hegiht = measuredHeight
             val yoffset = hegiht / 2
 
-            var maxLidarValue = 8000f
-//            for (ld in lidarData!!) {
-//                maxLidarValue = if (maxLidarValue < ld.distance) ld.distance else maxLidarValue
-//            }
+            var maxLidarValue = 6000f
 
             val maxSize = Math.min(width, hegiht)
             val scale = maxSize / maxLidarValue
@@ -68,7 +65,7 @@ class LidarVisualizer : View {
             for (ld in lidarData!!) {
                 val x = getX(ld, scale, xoffset)
                 val y = getY(ld, scale, yoffset)
-                if (ld.distance != 0f ){//&& ld.distance < 5500) {
+                if (ld.distance != 0f) {
                     if (path.isEmpty)
                         path.moveTo(x, y)
                     else
