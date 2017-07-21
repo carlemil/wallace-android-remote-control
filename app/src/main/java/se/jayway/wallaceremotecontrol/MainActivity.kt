@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         stringPublishSubject.sample(500, TimeUnit.MILLISECONDS)
                 .subscribe({ _ -> writeMotorSpeedToSocket(seekBarLeft.progress - 255, seekBarRight.progress - 255) })
 
-        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+        Observable.interval(0, 100, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .subscribe({ requestLidarData() })
     }

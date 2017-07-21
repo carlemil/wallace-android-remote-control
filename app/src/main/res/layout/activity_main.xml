@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/seekBarRight"
         android:layout_below="@id/seekBarLeft"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:alpha="0.50">
 
         <Button
             android:id="@+id/resetConnectionButton"
@@ -42,6 +43,7 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="32dp"
         android:max="512"
         android:progress="255" />
 
@@ -51,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
         android:max="512"
         android:progress="255" />
 
