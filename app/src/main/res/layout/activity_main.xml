@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/seekBarRight"
         android:layout_below="@id/seekBarLeft"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:alpha="0.50">
 
         <Button
             android:id="@+id/resetConnectionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:alpha="50"
             android:padding="16dp"
             android:rotation="-90"
             android:text="Reset \nconnection" />
@@ -32,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:alpha="50"
             android:padding="16dp"
             android:rotation="-90"
             android:text="Stop \nmotors" />
